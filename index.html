@@ -315,6 +315,7 @@ apiGet();
     showCommentAdd();
     
 
+
     fetch("https://wedev-api.sky.pro/api/v1/artem-katkov/comments", {
         method: "POST",
         body: JSON.stringify({
@@ -330,9 +331,7 @@ apiGet();
             .replaceAll('"', "&quot;"),
         })
 
-      }
-
-      )
+      })
       .then(() => {
         hideCommentAdd();
         apiFormShow();
@@ -343,6 +342,9 @@ apiGet();
         //showCommentLoading();
         hideCommentLoading();
            
+      })
+      .then(() => {
+        return addLikeEventListeners();
       })
 
     // nameInputElemnt.value = "";
@@ -360,6 +362,7 @@ apiGet();
     const likeButtons = document.querySelectorAll('.like-button');
     const likeButton = likeButtons[index];
     const comment = comments[index];
+    //const likeButtone = document.querySelectorAll('.like-button');
 
 
 
@@ -367,7 +370,10 @@ apiGet();
       //console.log('+1 like');
       comment.like += 1;
       comment.isLiked = true;
+      //likeButton.classList.add("loading-like");//качающеся сердце старт
       likeButton.classList.add("active-like");
+      //likeButton.classList.remove("loading-like");//качающеся сердце стоп
+      
     } else {
       //console.log('-1 like');
       comment.like -= 1;
