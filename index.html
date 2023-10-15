@@ -61,6 +61,9 @@
     <div class="comment-add hidden">
       <span>Комментарий добавляется...</span>
     </div>
+    <div class="internet-error hidden">
+      <span>Неполадки с Интеренетом. Отправьте комментарий позже...</span>
+    </div>
   </div>
 </body>
 
@@ -98,7 +101,7 @@ todayDay = todayDay < 10 ? "0" + todayDay : todayDay;
 //13 Домашка
 
 function apiFormHide(){//Порячу форму добавления коментария 
-  console.log("apiFormHide");
+  //console.log("apiFormHide");
   const apiFormHide = document.querySelector(".add-form");
   apiFormHide.classList.add("hidden");
 }
@@ -110,7 +113,7 @@ function apiFormShow(){//Показываю форму добавления ко
 }
 
 function showCommentLoading() {//Показываю (удаляю в стилях блок) временный текст до загрузки комментариев
-  console.log("showCommentLoading");
+  //console.log("showCommentLoading");
     const showCommentLoading = document.querySelector(".api-loader");
     showCommentLoading.classList.remove("hidden");
 }
@@ -130,7 +133,17 @@ function hideCommentAdd() {
   hideCommentAdd.classList.add("hidden")
 }
 
+function  showInternetError() {
+  const showInternetError = document.querySelector(".internet-error")
+  showInternetError.classList.remove("hidden")
+}
+function  hideInternetError() {
+  const hideInternetError = document.querySelector(".internet-error")
+  hideInternetError.classList.add("hidden")
+}
+
 //12 Домашка 
+//15 Домашка обрабатываю ошибки 500 и 400--------------------------------------
     function apiGet() {
       showCommentLoading();
       //apiFormHide();
@@ -160,7 +173,7 @@ function hideCommentAdd() {
         hideCommentLoading();
        //apiFormShow();
     });
-
+    
 }
 apiGet();
 
@@ -227,35 +240,34 @@ apiGet();
 
   const addComment = buttonElement.addEventListener('click', () => {
 
-//apiCommentShow();//Скрываю окно добавления комментария и показываю временную запись
+// Закоментил расчет текщей даты т.к. в получении данных из апи после оправки нового комментария используется другая функция отрисовки даты
+    //let data = new Date();
 
-    let data = new Date();
+    // let formatDay;
+    // if (data.getDate() < 10) {
+    //   formatDay = "0" + data.getDate();
+    // } else { formatDay = data.getDate() }
 
-    let formatDay;
-    if (data.getDate() < 10) {
-      formatDay = "0" + data.getDate();
-    } else { formatDay = data.getDate() }
+    // let formatMonth;
+    // if (data.getMonth() < 10) {
+    //   formatMonth = "0" + (data.getMonth() + 1);
+    // } else { formatMonth = data.getMonth() + 1 }
 
-    let formatMonth;
-    if (data.getMonth() < 10) {
-      formatMonth = "0" + (data.getMonth() + 1);
-    } else { formatMonth = data.getMonth() + 1 }
+    // let formatHours;
+    // if (data.getHours() < 10) {
+    //   formatHours = "0" + data.getHours();
+    // } else { formatHours = data.getHours() }
 
-    let formatHours;
-    if (data.getHours() < 10) {
-      formatHours = "0" + data.getHours();
-    } else { formatHours = data.getHours() }
+    // let formatMinutes;
+    // if (data.getMinutes() < 10) {
+    //   formatMinutes = "0" + data.getMinutes();
+    // } else { formatMinutes = data.getMinutes() }
 
-    let formatMinutes;
-    if (data.getMinutes() < 10) {
-      formatMinutes = "0" + data.getMinutes();
-    } else { formatMinutes = data.getMinutes() }
-
-    let formatYear;
-    formatYear = data.getFullYear().toString().substr(2, 2)
+    // let formatYear;
+    // formatYear = data.getFullYear().toString().substr(2, 2)
 
 
-    let formatDate = formatDay + "." + formatMonth + "." + formatYear + " " + formatHours + ":" + formatMinutes;
+    // let formatDate = formatDay + "." + formatMonth + "." + formatYear + " " + formatHours + ":" + formatMinutes;
 
 
 
@@ -311,7 +323,9 @@ apiGet();
     const textInApi = commentInputElement.value;
     const nameInApi = nameInputElemnt.value;
     //console.log(nameInputElemnt);
-    apiFormHide();
+    
+    //apiFormHide();
+    hideInternetError();
     showCommentAdd();
     
 
@@ -328,12 +342,21 @@ apiGet();
             .replaceAll(">", "&gt")
             .replaceAll("&", "&amp;")
             .replaceAll('"', "&quot;"),
+          forceError: true,
         })
 
-      }
-
-      )
-      .then(() => {
+      })
+      .then((response) => {
+        if (response.status === 500) {
+          hideCommentAdd();
+          showInternetError();
+          alert("Сервер сломаааался.")
+        } else if (response.status === 400) {
+          hideCommentAdd();
+          showInternetError();
+          alert("Имя и комментарий должны быть не короче 3 символов.")
+        } else {
+          //console.log("код в else");
         hideCommentAdd();
         apiFormShow();
       
@@ -342,8 +365,16 @@ apiGet();
         apiGet();
         //showCommentLoading();
         hideCommentLoading();
-           
+      }
       })
+      .catch((error) => {
+        hideCommentAdd();
+        showInternetError();
+        alert("Кажется, у вас сломался интернет, попробуйте позже.");
+        console.warn(error);
+      })
+
+
 
     // nameInputElemnt.value = "";
     // commentInputElement.value = "";
