@@ -373,10 +373,13 @@ apiGet();
       }
       })
       .catch((error) => {
-        hideCommentAdd();
+        // hideCommentAdd();
         showInternetError();
         alert("Кажется, у вас сломался интернет, попробуйте позже.");
         console.warn(error);
+      })
+      .finally(() => {
+        hideCommentAdd();
       })
 
 
