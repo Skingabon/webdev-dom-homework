@@ -5,6 +5,7 @@
   <title>Проект "Комменты"</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="style.css" />
+  <!-- <script type="module" src="main.js"></script> -->
 </head>
 
 <body>
@@ -143,21 +144,24 @@ function  hideInternetError() {
 }
 
 //12 Домашка 
-//15 Домашка обрабатываю ошибки 500 и 400--------------------------------------
+//15 Домашка обрабатываю ошибки 500 и 400-------------------------------
     function apiGet() {
       showCommentLoading();
       //apiFormHide();
 
-      
+     
       const fetchPromise = fetch(
         "https://wedev-api.sky.pro/api/v1/artem-katkov/comments",
         {
         metod: "GET",
-        });
-
-    fetchPromise.then((response) => response.json())
+        })
+        // .then ((response) => {
+        //   showCommentLoading();
+        // })
+        .then((response) => response.json())
     .then((responseData) => {
-        // console.log(responseData);
+         //console.log("//showCommentLoading();");
+         showCommentLoading();
         
         const apiComment = responseData.comments.map((comment) => {
             return {
@@ -166,12 +170,13 @@ function  hideInternetError() {
             text: comment.text,
             like: comment.likes,
             isLiked: false,
-            }  
+            } 
         });
         comments = apiComment;
+    })
+    .finally(() => {
         renderComment();
         hideCommentLoading();
-       //apiFormShow();
     });
     
 }
