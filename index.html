@@ -57,13 +57,19 @@
       <div class="add-form-row">
         <button class="add-form-button" id="add-button">Написать</button>
       </div>
-      
+
     </div>
     <div class="comment-add hidden">
       <span>Комментарий добавляется...</span>
     </div>
     <div class="internet-error hidden">
-      <span>Неполадки с Интеренетом. Отправьте комментарий позже...</span>
+      <span>Неполадки с Интернетом. Отправьте комментарий позже...</span>
+    </div>
+    <div class="srv-error hidden">
+      <span>Сервер не доступен. Отправьте комментарий позже...</span>
+    </div>
+    <div class="error-400 hidden">
+      <span>Имя и комментарий должны быть не короче 3 символов.</span>
     </div>
   </div>
 </body>
@@ -83,15 +89,15 @@
   const currentDate = new Date().toLocaleString().slice(0, -3);
   const likeButtons = document.querySelectorAll(".like-button");
   let comments = [];
- 
-function correctDate(date) {
-let currentDate = new Date(date);
-let todayDay = currentDate.getDate();
-let todayMonth = currentDate.getMonth() + 1;
-let todayYear = String(currentDate.getFullYear()).slice(-2);
-let todayHours = currentDate.getHours();
-let todayMinutes = currentDate.getMinutes();
-todayDay = todayDay < 10 ? "0" + todayDay : todayDay;
+
+  function correctDate(date) {
+    let currentDate = new Date(date);
+    let todayDay = currentDate.getDate();
+    let todayMonth = currentDate.getMonth() + 1;
+    let todayYear = String(currentDate.getFullYear()).slice(-2);
+    let todayHours = currentDate.getHours();
+    let todayMinutes = currentDate.getMinutes();
+    todayDay = todayDay < 10 ? "0" + todayDay : todayDay;
     todayMonth = todayMonth < 10 ? "0" + todayMonth : todayMonth;
     todayHours = todayHours < 10 ? "0" + todayHours : todayHours;
     todayMinutes = todayMinutes < 10 ? "0" + todayMinutes : todayMinutes;
@@ -99,112 +105,144 @@ todayDay = todayDay < 10 ? "0" + todayDay : todayDay;
     let formattedDate = `${todayDay}.${todayMonth}.${todayYear} ${todayHours}:${todayMinutes} `;
     return formattedDate;
   }
-//13 Домашка
+  //13 Домашка
 
-function apiFormHide(){//Порячу форму добавления коментария 
-  //console.log("apiFormHide");
-  const apiFormHide = document.querySelector(".add-form");
-  apiFormHide.classList.add("hidden");
-}
+  function apiFormHide() {//Порячу форму добавления коментария 
+    //console.log("apiFormHide");
+    const apiFormHide = document.querySelector(".add-form");
+    apiFormHide.classList.add("hidden");
+  }
 
-function apiFormShow(){//Показываю форму добавления коментария
-  //console.log("apiCommentShow");
-  const apiFormShow = document.querySelector(".add-form");
-  apiFormShow.classList.remove("hidden");
-}
+  function apiFormShow() {//Показываю форму добавления коментария
+    //console.log("apiCommentShow");
+    const apiFormShow = document.querySelector(".add-form");
+    apiFormShow.classList.remove("hidden");
+  }
 
-function showCommentLoading() {//Показываю (удаляю в стилях блок) временный текст до загрузки комментариев
-  //console.log("showCommentLoading");
+  function showCommentLoading() {//Показываю (удаляю в стилях блок) временный текст до загрузки комментариев
+    //console.log("showCommentLoading");
     const showCommentLoading = document.querySelector(".api-loader");
     showCommentLoading.classList.remove("hidden");
-}
+  }
 
-function hideCommentLoading() {//Удаляю (возвращаю блок) временный текст до загрузки комментариев
+  function hideCommentLoading() {//Удаляю (возвращаю блок) временный текст до загрузки комментариев
     const hideCommentLoading = document.querySelector(".api-loader");
     hideCommentLoading.classList.add("hidden");
-}
+  }
 
-function showCommentAdd() {
-  const showCommentAdd = document.querySelector(".comment-add")
-  showCommentAdd.classList.remove("hidden")
-}
+  function showCommentAdd() {
+    const showCommentAdd = document.querySelector(".comment-add")
+    showCommentAdd.classList.remove("hidden")
+  }
 
-function hideCommentAdd() {
-  const hideCommentAdd = document.querySelector(".comment-add")
-  hideCommentAdd.classList.add("hidden")
-}
+  function hideCommentAdd() {
+    const hideCommentAdd = document.querySelector(".comment-add")
+    hideCommentAdd.classList.add("hidden")
+  }
 
-function  showInternetError() {
-  const showInternetError = document.querySelector(".internet-error")
-  showInternetError.classList.remove("hidden")
-}
-function  hideInternetError() {
-  const hideInternetError = document.querySelector(".internet-error")
-  hideInternetError.classList.add("hidden")
-}
+  function showInternetError() {
+    const showInternetError = document.querySelector(".internet-error")
+    showInternetError.classList.remove("hidden")
+  }
+  function hideInternetError() {
+    const hideInternetError = document.querySelector(".internet-error")
+    hideInternetError.classList.add("hidden")
+  }
 
-//12 Домашка 
-//15 Домашка обрабатываю ошибки 500 и 400-------------------------------
-    function apiGet() {
-      showCommentLoading();
-      //apiFormHide();
+  function show500Error() {
+    const show500Error = document.querySelector(".srv-error")
+    show500Error.classList.remove("hidden")
+  }
+  function hide500Error() {
+    const hide500Error = document.querySelector(".srv-error")
+    hide500Error.classList.add("hidden")
+  }
 
-     
-      const fetchPromise = fetch(
-        "https://wedev-api.sky.pro/api/v1/artem-katkov/comments",
-        {
+  function show400Error() {
+    const show400Error = document.querySelector(".error-400")
+    show400Error.classList.remove("hidden")
+  }
+  function hide400Error() {
+    const hide400Error = document.querySelector(".error-400")
+    hide400Error.classList.add("hidden")
+  }
+
+  //12 Домашка 
+  //15 Домашка обрабатываю ошибки 500 и 400-------------------------------
+  function apiGet() {
+    //showCommentLoading();
+    //apiFormHide();
+
+
+
+    const fetchPromise = fetch(
+      "https://wedev-api.sky.pro/api/v1/artem-katkov/comments",
+      {
         metod: "GET",
-        })
-        // .then ((response) => {
-        //   showCommentLoading();
-        // })
-        .then((response) => response.json())
-    .then((responseData) => {
-         //console.log("//showCommentLoading();");
-         showCommentLoading();
-        
+      })
+      .then((response) => {
+        showCommentLoading();
+
+        return response
+      })
+
+      .then((response) => {
+        if (response.status === 500) {
+          throw new Error("Сервер сломаааался.");
+        }
+         else {
+          return response.json();
+        }
+      })
+      .then((responseData) => {
         const apiComment = responseData.comments.map((comment) => {
-            return {
+          return {
             name: comment.author.name,
             data: correctDate(comment.date),
             text: comment.text,
             like: comment.likes,
             isLiked: false,
-            } 
+          }
         });
         comments = apiComment;
-    })
-    .finally(() => {
         renderComment();
+      })
+      .catch((error) => {
+        console.dir(error);
+        showInternetError();
+        alert("Кажется, у вас сломался интернет, попробуйте позже.");
+        console.warn(error);
+      })
+      .finally(() => {
         hideCommentLoading();
-    });
-    
-}
-apiGet();
+      });
+
+  }
+  apiGet();
 
 
   nameInputElemnt.value = "";
   commentInputElement.value = "";
 
 
-//   const comments = [
-    // {
-    //   name: "Глеб Фокин",
-    //   data: "12.02.22 12:18",
-    //   text: "Это будет первый комментарий на этой странице",
-    //   like: 3,
-    //   isLiked: false,
-    //   isEdit: false,
-    // },
-    // {
-    //   name: "Варвара Н.",
-    //   data: "13.02.22 19:22",
-    //   text: "Мне нравится как оформлена эта страница! ❤",
-    //   like: 75,
-    //   isLiked: false,
-    //   isEdit: false,
-    // }
-//  ];
+  //   const comments = [
+  // {
+  //   name: "Глеб Фокин",
+  //   data: "12.02.22 12:18",
+  //   text: "Это будет первый комментарий на этой странице",
+  //   like: 3,
+  //   isLiked: false,
+  //   isEdit: false,
+  // },
+  // {
+  //   name: "Варвара Н.",
+  //   data: "13.02.22 19:22",
+  //   text: "Мне нравится как оформлена эта страница! ❤",
+  //   like: 75,
+  //   isLiked: false,
+  //   isEdit: false,
+  // }
+  //  ];
 
 
   //рендер-функция
@@ -244,8 +282,8 @@ apiGet();
 
 
   const addComment = buttonElement.addEventListener('click', () => {
-
-// Закоментил расчет текщей даты т.к. в получении данных из апи после оправки нового комментария используется другая функция отрисовки даты
+    hide500Error();
+    // Закоментил расчет текщей даты т.к. в получении данных из апи после оправки нового комментария используется другая функция отрисовки даты
     //let data = new Date();
 
     // let formatDay;
@@ -284,7 +322,7 @@ apiGet();
       return;
     }
 
-//Комментирую добавление в локальное хранилище т.к. добавлять буду через API на удаленное хранилище
+    //Комментирую добавление в локальное хранилище т.к. добавлять буду через API на удаленное хранилище
     // comments.push({
     //   name: nameInputElemnt.value
     //     .replaceAll('&', '&amp;')
@@ -327,55 +365,80 @@ apiGet();
 
     const textInApi = commentInputElement.value;
     const nameInApi = nameInputElemnt.value;
-    //console.log(nameInputElemnt);
-    
-    //apiFormHide();
+    const srvError = 'Сервер сломаааался.'
+    const inetError = 'Интернет не доступен.'
+    const dataError = 'Ошибка ввода данных.'
+    const errorStatus400 = "Failed to execute 'querySelector' on 'Document': '.400-error' is not a valid selector."
+    // 'Имя и комментарий должны быть не короче 3 символов.'
+
     hideInternetError();
     showCommentAdd();
-    
+
 
     fetch("https://wedev-api.sky.pro/api/v1/artem-katkov/comments", {
-        method: "POST",
-        body: JSON.stringify({
-          text: textInApi
-            .replaceAll("<", "&lt")
-            .replaceAll(">", "&gt")
-            .replaceAll("&", "&amp;")
-            .replaceAll('"', "&quot;"),
-          name: nameInApi
-            .replaceAll("<", "&lt")
-            .replaceAll(">", "&gt")
-            .replaceAll("&", "&amp;")
-            .replaceAll('"', "&quot;"),
-          forceError: true,
-        })
-
+      method: "POST",
+      body: JSON.stringify({
+        text: textInApi
+          .replaceAll("<", "&lt")
+          .replaceAll(">", "&gt")
+          .replaceAll("&", "&amp;")
+          .replaceAll('"', "&quot;"),
+        name: nameInApi
+          .replaceAll("<", "&lt")
+          .replaceAll(">", "&gt")
+          .replaceAll("&", "&amp;")
+          .replaceAll('"', "&quot;"),
+        forceError: true,
       })
+
+    })
       .then((response) => {
+        //throw new Error(srvError)
         if (response.status === 500) {
+          throw new Error(srvError)
+ 
+        } 
+          else if (response.status === 400) {
+          throw new Error('Ошибка ввода данных.')
+
+          
+        } 
+        else if (response.status !== 400 && response.status !== 500) {
+          throw new Error(inetError)
           hideCommentAdd();
           showInternetError();
-          alert("Сервер сломаааался.")
-        } else if (response.status === 400) {
+          
+        }
+        else {
           hideCommentAdd();
-          showInternetError();
-          alert("Имя и комментарий должны быть не короче 3 символов.")
-        } else {
-          //console.log("код в else");
-        hideCommentAdd();
-        apiFormShow();
-      
-        nameInputElemnt.value = "";
-        commentInputElement.value = "";
-        apiGet();
-        //showCommentLoading();
-        hideCommentLoading();
-      }
+          apiFormShow();
+          nameInputElemnt.value = "";
+          commentInputElement.value = "";
+          apiGet();
+          hideCommentLoading();
+        }
       })
       .catch((error) => {
-        // hideCommentAdd();
-        showInternetError();
+        console.dir(error);
+        console.log(error.message);
+         
+        if (error.message === srvError) {
+          hideCommentAdd();
+          show500Error();
+          alert("На сервере неполадки, попробуйте позже.");
+        } 
+        else if (error.message === "Ошибка ввода данных.") {
+          // hideCommentAdd();
+          // hide500Error();
+          show400Error();
+          console.dir(error.message);
+          alert("Имя и комментарий должны быть не короче 3 символов.");
+
+        }
+          else {
+        //showInternetError();
         alert("Кажется, у вас сломался интернет, попробуйте позже.");
+        }
         console.warn(error);
       })
       .finally(() => {
@@ -392,7 +455,7 @@ apiGet();
   })
 
 
-//addComment();
+  //addComment();
 
   // Функция счета лайков
   function addLike(index) {

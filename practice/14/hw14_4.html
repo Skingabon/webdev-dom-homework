@@ -142,7 +142,12 @@
           console.log(response);
 if (response.status === 201) {
   return response.json();
-} else { 
+}       else if (response.status === 500) {
+          hideCommentAdd();
+          showInternetError();
+          throw new Error("Сервер сломаааался.")
+          // alert("Сервер сломаааался.")
+        } else { 
         ////код обработки ошибки
         ////Вариант 1
     throw new Error("Сервер упааааал")
@@ -164,6 +169,7 @@ if (response.status === 201) {
           // const obj = {};
         })
         .catch((error) => {
+          console.dir(error);
           buttonElement.disabled = false;
           buttonElement.textContent = "Добавить";
           alert("Кажется, что-то пошло не так, попробуй позже");
