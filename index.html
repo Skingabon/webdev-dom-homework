@@ -403,7 +403,7 @@
 
           
         } 
-        else if (response.status !== 400 && response.status !== 500) {
+        else if (response.status !== 400 && response.status !== 500 && response.status !== 201) {
           throw new Error(inetError)
           hideCommentAdd();
           showInternetError();
