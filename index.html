@@ -442,11 +442,13 @@
         console.warn(error);
       })
       .finally(() => {
+        setTimeout(() => {
+          hideCommentAdd();
+          hide400Error();
+          hide500Error();
+        }, 3000)
         
-        hideCommentAdd();
-        hide400Error();
-        hide500Error();
-        console.log('finally');
+        //console.log('finally');
       })
 
 
