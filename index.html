@@ -427,13 +427,16 @@
           hideCommentAdd();
           show500Error();
        
-          alert("На сервере неполадки, попробуйте позже.");
+          setTimeout(()=> {
+            alert("11111111На сервере неполадки, попробуйте позже.");
+          }, 1000)
+          
       
         } 
         else if (error.message === "Ошибка ввода данных.") {
-          show400Error();
+          //show400Error();
           console.dir(error.message);
-                   alert("Имя и комментарий должны быть не короче 3 символов.");
+                   alert("1111111Имя и комментарий должны быть не короче 3 символов.");
           
         }
           else {
@@ -441,11 +444,17 @@
         }
         console.warn(error);
       })
-      .finally((error) => {
-        hideCommentAdd();
-        hide400Error();
-        hide500Error();
+      .finally(() => {
+        setTimeout(() => {
+          hideCommentAdd();
+          hide400Error();
+          hide500Error();
         console.log('finally');
+        }, 5000)
+                  // hideCommentAdd();
+                  //   hide400Error();
+                  //   hide500Error();
+                  // console.log('finally');
       })
 
 
