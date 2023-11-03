@@ -3,7 +3,7 @@
 
 export function getTodo() {
    return fetch(
-    "https://wedev-api.sky.pro/api/v1/artem-katkov/comments",
+    "https://wedev-api.sky.pro/api/v2/artem-katkov/comments",
     {
     metod: "GET",
     })
@@ -13,9 +13,12 @@ export function getTodo() {
 }
 
 
-export function postTodo({ textInApi, nameInApi }) {
-    return fetch("https://wedev-api.sky.pro/api/v1/artem-katkov/comments", {
+export function postTodo({ textInApi, nameInApi, user }) {
+    return fetch("https://wedev-api.sky.pro/api/v2/artem-katkov/comments", {
     method: "POST",
+    headers: {
+        'Authorization': `Bearer ${user}`,
+    },
     body: JSON.stringify({
       text: textInApi
         .replaceAll("<", "&lt")

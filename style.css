@@ -16,6 +16,7 @@ body {
   }
 
   .comments,
+  .autorizeForm,
   .comment {
     margin: 0;
     padding: 0;
@@ -24,6 +25,7 @@ body {
   }
 
   .comment,
+  .autorizeForm,
   .add-form {
     width: 596px;
     box-sizing: border-box;
@@ -36,7 +38,8 @@ body {
     border-radius: 20px;
   }
 
-  .comments {
+  .comments,
+  .autorizeForm {
     display: flex;
     flex-direction: column;
     gap: 24px;
