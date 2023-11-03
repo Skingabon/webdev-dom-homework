@@ -15,7 +15,7 @@ export function getTodos() {
     return fetch("https://webdev-hw-api.vercel.app/api/todos", {
         method: "POST",
         body: JSON.stringify({
-          text: text, //можно оставить text т.к. названия одинаковые
+          text: text, //можно оставить только  text т.к. названия одинаковые
         }),
       })
         .then((response) =>{

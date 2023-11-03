@@ -10,6 +10,7 @@ import { renderTodo } from './render.js';
 
     export let tasks = [];
 
+    ////////////////////перенес запрос GET  в модуль
     export const fetchAndRenderTasks = () => {
      getTodos().then((responseData) => {
           tasks = responseData.todos;
@@ -17,7 +18,7 @@ import { renderTodo } from './render.js';
           return true;
         });
     }
-///////////////////////////////////////////////////////////////
+///////////////////////перенес РЕНДЕР  в модуль
 
     // const renderTasks = () => {
     //   const tasksHtml = tasks
