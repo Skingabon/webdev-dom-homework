@@ -9,35 +9,38 @@ const nameInputElemnt = document.getElementById("input-name");
 const commentInputElement = document.getElementById("input-comment");
 const currentDate = new Date().toLocaleString().slice(0, -3);
 const likeButtons = document.querySelectorAll(".like-button");
-const user = 'ksdfsksdfjfsdjk6';
+const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
 
-1 Установить инсомния или постман
-2 В Апи авторизации посмотреть как зарегистрироваться
-3 Выполнить в постман или инсомнии запрос со своим паролем и именем
-4 В ответе я получу информацию о пользователе и токен
-5 Подставлю токен в переменную user вместо ksdfsksdfjfsdjk6
-6 Проверяю добавление коментария авторизованного пользователя
-7 Улучшаю форму авторизации (добавляю поля логин пароль и кнопку войти)
-8 Добавляю в API новую функцию которая выполняет авторизацию по кнопке в форме
-9 Вызываю фукнцию входа авторизованного юзера по клику на кнопку войти
-10 Посмотреть что возвращает авторизация https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
-11 Получить токен и записать его в переменную юзер или ЛокалСтораж 
+
+// 1 OK! Установить инсомния или постман 
+// 2 OK! В Апи авторизации посмотреть как зарегистрироваться
+// 3 OK! Выполнить в постман или инсомнии запрос со своим паролем и именем
+// 4 OK! В ответе я получу информацию о пользователе и токен
+// 5 OK! Подставлю токен в переменную user вместо ksdfsksdfjfsdjk6
+// 6 OK!Проверяю добавление коментария авторизованного пользователя
+// 7 OK! Улучшаю форму авторизации (добавляю поля логин пароль и кнопку войти)
+// 8 Добавляю в API новую функцию которая выполняет авторизацию по кнопке в форме
+// 9 Вызываю фукнцию входа авторизованного юзера по клику на кнопку войти
+// 10 Посмотреть что возвращает авторизация https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
+// 11 Получить токен и записать его в переменную юзер или ЛокалСтораж 
 ////localStorage.setItem('TOKEN', user.token); 
 ////localStorage.setItem('NAME', user.name);
 ////const user = localStorage.getItem('TOKEN');
 
-12  Если пользователь авторизовался то я скрываю форму авторизации
+// 12  Если пользователь авторизовался то я скрываю форму авторизации
 
 
 
 
-if (!user) {
+if (!token) {
   apiFormHide();
 }
 
 
 
 export let comments = [];
+
+// let password = prompt("Ввести пароль");
 
 function correctDate(date) {
   let currentDate = new Date(date);
@@ -152,7 +155,7 @@ const addComment = buttonElement.addEventListener('click', () => {
   showCommentAdd();
 
 
-  postTodo({ textInApi, nameInApi, user }).then((response) => {
+  postTodo({ textInApi, nameInApi, token }).then((response) => {
 
     hideCommentAdd();
     if (response.status === 500) {
