@@ -10,6 +10,7 @@ const listElement = document.querySelector('.comments')
     //формирование HTML строки
     const commentsHTML = comments.map((comment, index) => {
       return `<li data-index="${index}" class="comment">
+
           <div class="comment-header">
             <div>${comment.name}</div>
             <div>${comment.data}</div>

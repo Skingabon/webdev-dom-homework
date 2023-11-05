@@ -32,9 +32,9 @@ const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k'
 
 
 
-if (!token) {
-  apiFormHide();
-}
+// if (!token) {
+//   apiFormHide();
+// }
 
 
 
@@ -58,13 +58,13 @@ function correctDate(date) {
   return formattedDate;
 }
 
-function apiFormHide() {//Порячу форму добавления коментария 
+export function apiFormHide() {//Порячу форму добавления коментария 
   //console.log("apiFormHide");
   const apiFormHide = document.querySelector(".add-form");
   apiFormHide.classList.add("hidden");
 }
 
-function apiFormShow() {//Показываю форму добавления коментария
+export function apiFormShow() {//Показываю форму добавления коментария
   //console.log("apiCommentShow");
   const apiFormShow = document.querySelector(".add-form");
   apiFormShow.classList.remove("hidden");
@@ -101,7 +101,7 @@ function hideInternetError() {
 }
 
 
-function hideAutorizeForm() {
+export function hideAutorizeForm() {
   const hideCommentLoading = document.querySelector(".autorizeForm");
   hideCommentLoading.classList.add("hidden");
 }
