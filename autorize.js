@@ -1,15 +1,13 @@
+import { login } from './api.js';
 import { apiFormHide, apiFormShow, hideAutorizeForm } from './main.js'
 
 
-
+let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
+token = null;
 
 
 export function autorizeRender(token) {
-// token = null;
 const autorizeForm = document.querySelector('.autorizeForm');
-
-
-
 if (!token) {
     apiFormHide();
  const appHTML =
@@ -34,7 +32,16 @@ id="input-name1" />
 autorizeForm.innerHTML = appHTML;
 
 document.getElementById("login-button").addEventListener('click', () => {
-    token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
+    
+    login({
+        login: "admin",
+        password: "admin",
+    }).then((user) => {
+        
+        console.log(user);
+        user(`Bearer ${user.user.token}`);
+    })
+       
     autorizeRender();
     console.log('нажал войти');
     console.log(token);

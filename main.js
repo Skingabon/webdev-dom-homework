@@ -10,6 +10,12 @@ const commentInputElement = document.getElementById("input-comment");
 const currentDate = new Date().toLocaleString().slice(0, -3);
 const likeButtons = document.querySelectorAll(".like-button");
 const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
+const textInApi = commentInputElement.value;
+const nameInApi = nameInputElemnt.value;
+// const loginInputElement = document.getElementById("input-login");
+// const passwordInputElement = document.getElementById("input-password");
+// export const textLogin = loginInputElement.value;
+// export const textPassword = passwordInputElement.value;
 
 
 // 1 OK! Установить инсомния или постман 
@@ -19,8 +25,8 @@ const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k'
 // 5 OK! Подставлю токен в переменную user вместо ksdfsksdfjfsdjk6
 // 6 OK!Проверяю добавление коментария авторизованного пользователя
 // 7 OK! Улучшаю форму авторизации (добавляю поля логин пароль и кнопку войти)
-// 8 Добавляю в API новую функцию которая выполняет авторизацию по кнопке в форме
-// 9 Вызываю фукнцию входа авторизованного юзера по клику на кнопку войти
+// 8 OK! Добавляю в API новую функцию которая выполняет авторизацию по кнопке в форме
+// 9 OK! Вызываю фукнцию входа авторизованного юзера по клику на кнопку войти
 // 10 Посмотреть что возвращает авторизация https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
 // 11 Получить токен и записать его в переменную юзер или ЛокалСтораж 
 ////localStorage.setItem('TOKEN', user.token); 
@@ -28,14 +34,6 @@ const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k'
 ////const user = localStorage.getItem('TOKEN');
 
 // 12  Если пользователь авторизовался то я скрываю форму авторизации
-
-
-
-
-// if (!token) {
-//   apiFormHide();
-// }
-
 
 
 export let comments = [];
@@ -100,13 +98,10 @@ function hideInternetError() {
   hideInternetError.classList.add("hidden")
 }
 
-
 export function hideAutorizeForm() {
   const hideCommentLoading = document.querySelector(".autorizeForm");
   hideCommentLoading.classList.add("hidden");
 }
-
-
 
 export function apiGet() {
   showCommentLoading();
@@ -139,8 +134,6 @@ commentInputElement.value = "";
 renderComment();
 
 const addComment = buttonElement.addEventListener('click', () => {
-
-  
   nameInputElemnt.classList.remove("error");
   commentInputElement.classList.remove("error");
   if (nameInputElemnt.value === "" || commentInputElement.value === "") {
@@ -148,14 +141,12 @@ const addComment = buttonElement.addEventListener('click', () => {
     return;
   }
 
-  const textInApi = commentInputElement.value;
-  const nameInApi = nameInputElemnt.value;
-  //console.log(nameInputElemnt);
+
   hideInternetError();
   showCommentAdd();
 
-
-  postTodo({ textInApi, nameInApi, token }).then((response) => {
+  postTodo({ textInApi, nameInApi, token })
+  .then((response) => {
 
     hideCommentAdd();
     if (response.status === 500) {
@@ -185,18 +176,13 @@ const addComment = buttonElement.addEventListener('click', () => {
       }
       console.warn(error);
     })
- })
-
-
-
+})
 
 // Функция счета лайков
 function addLike(index) {
   const likeButtons = document.querySelectorAll('.like-button');
   const likeButton = likeButtons[index];
   const comment = comments[index];
-
-
 
   if (!comment.isLiked) {
     //console.log('+1 like');
@@ -209,7 +195,6 @@ function addLike(index) {
     comment.isLiked = false;
     renderComment();
   }
-  //console.log(index);
 
   //Обновляю счетчик числа лайков (свойство previousElementSibling содержит предыдущий элемент, находящийся в этом же родителе)
   const likeCounter = likeButton.previousElementSibling;
