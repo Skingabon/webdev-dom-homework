@@ -39,7 +39,8 @@ document.getElementById("login-button").addEventListener('click', () => {
     }).then((user) => {
         
         console.log(user);
-        user(`Bearer ${user.user.token}`);
+        token = `Bearer ${user.user.token}`;
+        console.log(token);
     })
        
     autorizeRender();

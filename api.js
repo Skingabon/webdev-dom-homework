@@ -39,7 +39,7 @@ export function login({ login, password}) {
     console.log("Я в ЛОГИНЕ");
     console.log(login);
     console.log(password);
-    return fetch("https://wedev-api.sky.pro/api/v2/artem-katkov/login"
+    return fetch("https://wedev-api.sky.pro/api/user/login"
     , {
     method: "POST",
     body: JSON.stringify({
