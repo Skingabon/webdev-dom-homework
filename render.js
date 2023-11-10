@@ -1,15 +1,20 @@
-import{comments, addLikeEventListeners, oncommentClickEventListener} from './main.js'
+// import { comments, addLikeEventListeners, oncommentClickEventListener } from './main.js' HELP
 
+
+import { autorizeRender, token } from './autorize.js';
+import { addLikeEventListeners, comments } from './main.js'
 
 export const renderComment = () => {
 
-const listElement = document.querySelector('.comments')
 
 
-    //поиск элемента списка в стр.79
-    //формирование HTML строки
-    const commentsHTML = comments.map((comment, index) => {
-      return `<li data-index="${index}" class="comment">
+  const listElement = document.querySelector('.comments');
+  const appHTML = document.getElementById('app');
+
+  //поиск элемента списка в стр.79
+  //формирование HTML строки
+  const commentsHTML = comments.map((comment, index) => {
+    return `<li data-index="${index}" class="comment">
 
           <div class="comment-header">
             <div>${comment.name}</div>
@@ -27,10 +32,23 @@ const listElement = document.querySelector('.comments')
             </div>
           </div>
         </li>`;
-    }).join('');
-    //console.log(commentsHTML);
-    listElement.innerHTML = commentsHTML;
+  }).join('');
+  //console.log(commentsHTML);
+  appHTML.innerHTML = `
+  <ul class="comments" id="list">
+  ${commentsHTML}
+  </ul>
+${!token ? '<button class="autorize-button"> Авторизоваться </button>' : 'Форма'}
 
-    addLikeEventListeners()
-    oncommentClickEventListener()
-  };
+  `
+  if (!token) {
+    const autorizeButton = document.querySelector('.autorize-button');
+    autorizeButton.addEventListener('click', () => {
+      autorizeRender();
+    })
+  }
+  // listElement.innerHTML = commentsHTML;
+
+  addLikeEventListeners()
+  //   oncommentClickEventListener() help
+};

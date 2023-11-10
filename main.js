@@ -3,19 +3,22 @@ import { renderComment } from './render.js';
 import { autorizeRender } from './autorize.js';
 
 
-const buttonElement = document.getElementById("add-button");
-const listElement = document.getElementById("list");
-const nameInputElemnt = document.getElementById("input-name");
-const commentInputElement = document.getElementById("input-comment");
-const currentDate = new Date().toLocaleString().slice(0, -3);
-const likeButtons = document.querySelectorAll(".like-button");
-const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
-const textInApi = commentInputElement.value;
-const nameInApi = nameInputElemnt.value;
-// const loginInputElement = document.getElementById("input-login");
-// const passwordInputElement = document.getElementById("input-password");
-// export const textLogin = loginInputElement.value;
-// export const textPassword = passwordInputElement.value;
+//HELP
+// const buttonElement = document.getElementById("add-button");
+// const listElement = document.getElementById("list");
+// const nameInputElemnt = document.getElementById("input-name");
+// const commentInputElement = document.getElementById("input-comment");
+// const currentDate = new Date().toLocaleString().slice(0, -3);
+// const likeButtons = document.querySelectorAll(".like-button");
+// const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
+// const textInApi = commentInputElement.value;
+// const nameInApi = nameInputElemnt.value;
+//HELP
+
+///////// const loginInputElement = document.getElementById("input-login");
+///////// // const passwordInputElement = document.getElementById("input-password");
+////////// / export const textLogin = loginInputElement.value;
+////////// / export const textPassword = passwordInputElement.value;
 
 
 // 1 OK! Установить инсомния или постман 
@@ -104,7 +107,7 @@ export function hideAutorizeForm() {
 }
 
 export function apiGet() {
-  showCommentLoading();
+  // showCommentLoading(); help
 
   getTodo().then((responseData) => {
     console.log(responseData);
@@ -120,63 +123,72 @@ export function apiGet() {
     });
     comments = apiComment;
     renderComment();
-    hideCommentLoading();
+    // hideCommentLoading(); help
   });
 
 }
-autorizeRender();
+// autorizeRender();   HELP
 apiGet();
 
 
-nameInputElemnt.value = "";
-commentInputElement.value = "";
+// nameInputElemnt.value = "";  HELP
+// commentInputElement.value = "";  HELP
 
-renderComment();
-
-const addComment = buttonElement.addEventListener('click', () => {
-  nameInputElemnt.classList.remove("error");
-  commentInputElement.classList.remove("error");
-  if (nameInputElemnt.value === "" || commentInputElement.value === "") {
-    alert("Заполните ИМЯ и ваш комментарий, пожалуйста.")
-    return;
-  }
+// renderComment();
 
 
-  hideInternetError();
-  showCommentAdd();
+// /////////////////////HELP
 
-  postTodo({ textInApi, nameInApi, token })
-  .then((response) => {
 
-    hideCommentAdd();
-    if (response.status === 500) {
-      throw new Error('500')
-    }
-    if (response.status === 400) {
-      throw new Error('400')
-    }
 
-    apiFormShow();
-    nameInputElemnt.value = "";
-    commentInputElement.value = "";
-    apiGet();
-    hideCommentLoading();
 
-  })
-    .catch((error) => {
-      if (error.message === '500') {
-        alert("Сервер сломаааался.")
-      }
-      if (error.message === '400') {
-        alert("Имя и комментарий должны быть не короче 3 символов.")
-      }
-      if (error.message === 'Failed to fetch') {
-        showInternetError();
-        alert("Кажется, у вас сломался интернет, попробуйте позже.");
-      }
-      console.warn(error);
-    })
-})
+
+
+
+// const addComment = buttonElement.addEventListener('click', () => {
+//   nameInputElemnt.classList.remove("error");
+//   commentInputElement.classList.remove("error");
+//   if (nameInputElemnt.value === "" || commentInputElement.value === "") {
+//     alert("Заполните ИМЯ и ваш комментарий, пожалуйста.")
+//     return;
+//   }
+
+
+//   hideInternetError();
+//   showCommentAdd();
+
+//   postTodo({ textInApi: commentInputElement.value, nameInApi: nameInputElemnt.value, token })
+//     .then((response) => {
+
+//       hideCommentAdd();
+//       if (response.status === 500) {
+//         throw new Error('500')
+//       }
+//       if (response.status === 400) {
+//         throw new Error('400')
+//       }
+
+//       apiFormShow();
+//       nameInputElemnt.value = "";
+//       commentInputElement.value = "";
+//       apiGet();
+//       hideCommentLoading();
+
+//     })
+//     .catch((error) => {
+//       if (error.message === '500') {
+//         alert("Сервер сломаааался.")
+//       }
+//       if (error.message === '400') {
+//         alert("Имя и комментарий должны быть не короче 3 символов.")
+//       }
+//       if (error.message === 'Failed to fetch') {
+//         showInternetError();
+//         alert("Кажется, у вас сломался интернет, попробуйте позже.");
+//       }
+//       console.warn(error);
+//     })
+// })
 
 // Функция счета лайков
 function addLike(index) {
@@ -218,17 +230,20 @@ export function addLikeEventListeners() {
 }
 
 addLikeEventListeners();
-renderComment();
 
-///////НУЖНО ПЕРЕДАТЬ В РЕНДЕР МОДУЛЬ В КАЧЕСТВЕ ПАРАМЕТРА
-export function oncommentClickEventListener() {
-  const commentUpdate = document.querySelectorAll('.comment');
-  for (const comment of commentUpdate) {
-    comment.addEventListener('click', () => {
-      let index = comment.dataset.index;
-      let object = comments[index];
-      commentInputElement.value = `${object.text} // ${object.name}`;
-      renderComment();
-    });
-  }
-}
+
+
+// renderComment();
+
+// ///////НУЖНО ПЕРЕДАТЬ В РЕНДЕР МОДУЛЬ В КАЧЕСТВЕ ПАРАМЕТРА
+// export function oncommentClickEventListener() {
+//   const commentUpdate = document.querySelectorAll('.comment');
+//   for (const comment of commentUpdate) {
+//     comment.addEventListener('click', () => {
+//       let index = comment.dataset.index;
+//       let object = comments[index];
+//       commentInputElement.value = `${object.text} // ${object.name}`;
+//       renderComment();
+//     });
+//   }
+// }
