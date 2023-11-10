@@ -3,7 +3,7 @@ import { renderComment } from './render.js';
 import { autorizeRender } from './autorize.js';
 
 
-//HELP
+//HELP help 
 // const buttonElement = document.getElementById("add-button");
 // const listElement = document.getElementById("list");
 // const nameInputElemnt = document.getElementById("input-name");

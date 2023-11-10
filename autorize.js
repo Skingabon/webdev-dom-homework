@@ -1,7 +1,7 @@
 import { login } from './api.js';
 import { apiFormHide, apiFormShow, hideAutorizeForm } from './main.js'
 
-//help
+//help help
 // export let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
 // token = null; 
 export let token = null;

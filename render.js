@@ -1,4 +1,4 @@
-// import { comments, addLikeEventListeners, oncommentClickEventListener } from './main.js' HELP
+// import { comments, addLikeEventListeners, oncommentClickEventListener } from './main.js' HELP help
 
 
 import { autorizeRender, token } from './autorize.js';
