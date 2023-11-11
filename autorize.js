@@ -1,5 +1,6 @@
 import { login } from './api.js';
 import { apiFormHide, apiFormShow, hideAutorizeForm } from './main.js'
+import { renderComment } from './render.js';
 
 //help help
 // export let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
@@ -55,13 +56,14 @@ id="input-name1" />
             login: loginForm,
             password: passwordForm,
         }).then((user) => {
-            console.log(passwordForm);
-            if (passwordForm != password) { throw new Error("400") }
-            else {
-                console.log(user);
-                token = `Bearer ${user.user.token}`;
-                console.log(token);
-            }
+            console.log('я в зЭне');
+            renderComment();
+            // if (passwordForm != password) { throw new Error("400") }
+            // else {
+            //     console.log('Привет юзер');
+            //     token = `Bearer ${user.user.token}`;
+            //     console.log('Твой пароль');
+            // }
         }).catch((error) => {
             if (error.message === '400') {
                 alert("Наконецто ппоймал ошибку авторизации")

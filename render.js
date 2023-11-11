@@ -38,15 +38,17 @@ export const renderComment = () => {
   <ul class="comments" id="list">
   ${commentsHTML}
   </ul>
-${!token ? '<button class="autorize-button"> Авторизоваться </button>' : 'Форма'}
+${!token ? '<button class="autorize-button"> Авторизоваться </button>' : '<button class="autorize-button"> Привет </button>'}
 
   `
   if (!token) {
+    console.log('Не сдавайся, никогда.1');
     const autorizeButton = document.querySelector('.autorize-button');
     autorizeButton.addEventListener('click', () => {
       autorizeRender();
     })
   }
+  if (token != !token) { console.log('Не сдавайся, никогда.2'); }
   // listElement.innerHTML = commentsHTML;
 
   addLikeEventListeners()
