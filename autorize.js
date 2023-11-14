@@ -1,11 +1,14 @@
 import { login } from './api.js';
-import { apiFormHide, apiFormShow, hideAutorizeForm } from './main.js'
+import { apiFormHide, apiFormShow, apiGet, hideAutorizeForm } from './main.js'
 import { renderComment } from './render.js';
 
 //help help
-// export let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
-// token = null; 
-export let token = null;
+//export let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
+//token = null;
+export let userName = localStorage.getItem('user');
+export let token = localStorage.getItem('token');
+
+// export let userName = null;
 
 export function autorizeRender() {
     // const autorizeForm = document.querySelector('.autorizeForm'); HELP
@@ -55,9 +58,17 @@ id="input-name1" />
             // password: "admin",
             login: loginForm,
             password: passwordForm,
-        }).then((user) => {
-            console.log('я в зЭне');
+        }).then((response) => {
+            //console.log('я в зэне Авторизации');
+            // console.log(response);
+            token = response.user.token;
+            userName = response.user.name;
+            console.log(userName);
+            localStorage.setItem('user', userName);
+            localStorage.setItem('token', token);
             renderComment();
+
+            // apiFormShow();
             // if (passwordForm != password) { throw new Error("400") }
             // else {
             //     console.log('Привет юзер');
@@ -68,15 +79,16 @@ id="input-name1" />
             if (error.message === '400') {
                 alert("Наконецто ппоймал ошибку авторизации")
             }
-
+            if (error.message === '201') {
+                alert("Авторизовались")
+            }
         })
         //help
         // // autorizeRender(); help
         // console.log('нажал войти');
         // console.log(token);
         // hideAutorizeForm();
-        // //  apiFormShow(); help
-
+        // apiFormShow();
     }
     )
 

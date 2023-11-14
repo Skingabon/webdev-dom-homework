@@ -9,13 +9,12 @@ export function getTodo() {
     })
 }
 
-
 export function postTodo({ textInApi, nameInApi, token }) {
   return fetch("https://wedev-api.sky.pro/api/v2/artem-katkov/comments"
     , {
       method: "POST",
       headers: {
-        Authorization: token, //`Bearer ${user}`, help
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         text: textInApi
@@ -33,7 +32,6 @@ export function postTodo({ textInApi, nameInApi, token }) {
 
     })
 }
-///////////////////////
 
 export function login({ login, password }) {
   console.log("Я в ЛОГИНЕ");
@@ -47,7 +45,13 @@ export function login({ login, password }) {
         password,
       }),
 
-    }).then((response) => {
+    })
+    // .then((user) => {
+    // })
+    .then((response) => {
+      //console.log(response.status);
+
       return response.json();
+
     });
 }

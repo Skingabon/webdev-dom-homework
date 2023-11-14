@@ -1,10 +1,10 @@
 import { getTodo, postTodo } from "./api.js";
 import { renderComment } from './render.js';
-import { autorizeRender } from './autorize.js';
+import { token } from './autorize.js';
 
 
 //HELP help 
-// const buttonElement = document.getElementById("add-button");
+const buttonElement = document.getElementById("add-button");
 // const listElement = document.getElementById("list");
 // const nameInputElemnt = document.getElementById("input-name");
 // const commentInputElement = document.getElementById("input-comment");
@@ -92,11 +92,11 @@ function hideCommentAdd() {
   hideCommentAdd.classList.add("hidden")
 }
 
-function showInternetError() {
+export function showInternetError() {
   const showInternetError = document.querySelector(".internet-error")
   showInternetError.classList.remove("hidden")
 }
-function hideInternetError() {
+export function hideInternetError() {
   const hideInternetError = document.querySelector(".internet-error")
   hideInternetError.classList.add("hidden")
 }
@@ -107,7 +107,11 @@ export function hideAutorizeForm() {
 }
 
 export function apiGet() {
-  // showCommentLoading(); help
+  console.log('мы в гете');
+  renderComment();
+  showCommentLoading();
+
+
 
   getTodo().then((responseData) => {
     console.log(responseData);
@@ -122,8 +126,10 @@ export function apiGet() {
       }
     });
     comments = apiComment;
+
+    hideCommentLoading();
     renderComment();
-    // hideCommentLoading(); help
+
   });
 
 }
@@ -145,50 +151,56 @@ apiGet();
 
 
 
-// const addComment = buttonElement.addEventListener('click', () => {
-//   nameInputElemnt.classList.remove("error");
-//   commentInputElement.classList.remove("error");
-//   if (nameInputElemnt.value === "" || commentInputElement.value === "") {
-//     alert("Заполните ИМЯ и ваш комментарий, пожалуйста.")
-//     return;
-//   }
+export function addComment() {
+  const buttonElement = document.getElementById("add-button");
+  const nameInputElemnt = document.getElementById("input-name");
+  const commentInputElement = document.getElementById("input-comment");
+
+  buttonElement.addEventListener('click', () => {
+    nameInputElemnt.classList.remove("error");
+    commentInputElement.classList.remove("error");
+    if (nameInputElemnt.value === "" || commentInputElement.value === "") {
+      alert("Заполните ИМЯ и ваш комментарий, пожалуйста.")
+      return;
+    }
 
 
-//   hideInternetError();
-//   showCommentAdd();
+    hideInternetError();
+    showCommentAdd();
 
-//   postTodo({ textInApi: commentInputElement.value, nameInApi: nameInputElemnt.value, token })
-//     .then((response) => {
+    postTodo({ textInApi: commentInputElement.value, nameInApi: nameInputElemnt.value, token })
+      .then((response) => {
 
-//       hideCommentAdd();
-//       if (response.status === 500) {
-//         throw new Error('500')
-//       }
-//       if (response.status === 400) {
-//         throw new Error('400')
-//       }
+        hideCommentAdd();
+        if (response.status === 500) {
+          throw new Error('500')
+        }
+        if (response.status === 400) {
+          throw new Error('400')
+        }
 
-//       apiFormShow();
-//       nameInputElemnt.value = "";
-//       commentInputElement.value = "";
-//       apiGet();
-//       hideCommentLoading();
+        apiFormShow();
+        nameInputElemnt.value = "";
+        commentInputElement.value = "";
+        apiGet();
+        hideCommentLoading();
 
-//     })
-//     .catch((error) => {
-//       if (error.message === '500') {
-//         alert("Сервер сломаааался.")
-//       }
-//       if (error.message === '400') {
-//         alert("Имя и комментарий должны быть не короче 3 символов.")
-//       }
-//       if (error.message === 'Failed to fetch') {
-//         showInternetError();
-//         alert("Кажется, у вас сломался интернет, попробуйте позже.");
-//       }
-//       console.warn(error);
-//     })
-// })
+      })
+      .catch((error) => {
+        if (error.message === '500') {
+          alert("Сервер сломаааался.")
+        }
+        if (error.message === '400') {
+          alert("Имя и комментарий должны быть не короче 3 символов.")
+        }
+        if (error.message === 'Failed to fetch') {
+          showInternetError();
+          alert("Кажется, у вас сломался интернет, попробуйте позже.");
+        }
+        console.warn(error);
+      })
+  })
+}
 
 // Функция счета лайков
 function addLike(index) {
