@@ -146,15 +146,18 @@ apiGet();
 // /////////////////////HELP
 
 
-
-
-
-
-
 export function addComment() {
   const buttonElement = document.getElementById("add-button");
   const nameInputElemnt = document.getElementById("input-name");
   const commentInputElement = document.getElementById("input-comment");
+  const buttonExit = document.getElementById("exit-button");
+
+  buttonExit.addEventListener('click', () => {
+    // alert("До свидания. Возвращайтесь.");
+    localStorage.removeItem('token');
+    return renderComment();
+    // return apiGet(); //перерендерить 
+  })
 
   buttonElement.addEventListener('click', () => {
     nameInputElemnt.classList.remove("error");

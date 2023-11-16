@@ -21,6 +21,7 @@ export const renderComment = () => {
     id="input-comment"></textarea>
   <div class="add-form-row">
     <button class="add-form-button" id="add-button">Написать</button>
+    <button class="add-form-button" id="exit-button">Выход</button>
   </div>
   </div>`
   //поиск элемента списка в стр.79
@@ -63,10 +64,11 @@ export const renderComment = () => {
     <div class="internet-error hidden">
       <span>Неполадки с Интеренетом. Отправьте комментарий позже...</span>
     </div>
+
 ${(!token) ? buttonAutorize : formAccesUser}
 `
   if (token) { addComment() }
-
+  // console.log(userVisit);
 
   if (!token) {
     console.log(token);

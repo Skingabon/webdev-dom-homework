@@ -4,15 +4,16 @@ import { renderComment } from './render.js';
 
 //help help
 //export let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
-//token = null;
+// token = null;
 export let userName = localStorage.getItem('user');
 export let token = localStorage.getItem('token');
 
 // export let userName = null;
-
+// export let userVisit = false;
 export function autorizeRender() {
     // const autorizeForm = document.querySelector('.autorizeForm'); HELP
     const appHTML = document.getElementById('app');
+    let isLoginMode = true;
     // if (!token) {
     // apiFormHide(); help
     const loginHTML =
@@ -38,6 +39,10 @@ id="input-name1" />
 </div>
         `
     appHTML.innerHTML = loginHTML;
+
+    document.getElementById("toggle-button").addEventListener('click', () => {
+        isLoginMode = !isLoginMode;
+    })
 
     document.getElementById("login-button").addEventListener('click', () => {
 
@@ -66,6 +71,7 @@ id="input-name1" />
             console.log(userName);
             localStorage.setItem('user', userName);
             localStorage.setItem('token', token);
+            // userVisit = true;
             renderComment();
 
             // apiFormShow();
@@ -76,12 +82,14 @@ id="input-name1" />
             //     console.log('Твой пароль');
             // }
         }).catch((error) => {
-            if (error.message === '400') {
-                alert("Наконецто ппоймал ошибку авторизации")
-            }
-            if (error.message === '201') {
-                alert("Авторизовались")
-            }
+            // console.error(error.message);
+            // if (error.message === '400') {
+            //     alert("Наконецто ппоймал ошибку авторизации")
+            // }
+            // if (error.message === '201') {
+            //     alert("Авторизовались")
+            // }
+            alert(error.message)
         })
         //help
         // // autorizeRender(); help
