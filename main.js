@@ -154,9 +154,10 @@ export function addComment() {
 
   buttonExit.addEventListener('click', () => {
     // alert("До свидания. Возвращайтесь.");
+
     localStorage.removeItem('token');
-    return renderComment();
-    // return apiGet(); //перерендерить 
+    setToken(null);
+    return apiGet(); //перерендерить 
   })
 
   buttonElement.addEventListener('click', () => {

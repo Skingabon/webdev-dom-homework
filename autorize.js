@@ -7,13 +7,17 @@ import { renderComment } from './render.js';
 // token = null;
 export let userName = localStorage.getItem('user');
 export let token = localStorage.getItem('token');
-
+export const setToken = (newToken) => {
+    token = newToken;
+}
+let isLoginMode = true;
 // export let userName = null;
 // export let userVisit = false;
-export function autorizeRender() {
+export function autorizeRender(isLoginMode = true) {
     // const autorizeForm = document.querySelector('.autorizeForm'); HELP
     const appHTML = document.getElementById('app');
-    let isLoginMode = true;
+
+    // let isLoginMode = true;
     // if (!token) {
     // apiFormHide(); help
     const loginHTML =
@@ -49,7 +53,8 @@ id="input-name1" />
 
     document.getElementById("toggle-button").addEventListener('click', () => {
         isLoginMode = !isLoginMode;
-        autorizeRender();
+        console.log("Я в кнопке перейти к регистрации");
+        autorizeRender(isLoginMode);
     })
 
     document.getElementById("login-button").addEventListener('click', () => {
