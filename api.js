@@ -1,8 +1,14 @@
+import { token } from "./autorize.js";
+import { apiGet } from "./main.js";
+
 export function getTodo() {
   return fetch(
     "https://wedev-api.sky.pro/api/v2/artem-katkov/comments",
     {
       metod: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
     .then((response) => {
       return response.json();
@@ -56,6 +62,31 @@ export function login({ login, password }) {
       return response.json();
 
     });
+}
+
+export function deleteCommentApi({ id }) {
+  return fetch("https://wedev-api.sky.pro/api/v2/artem-katkov/comments/" + id, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    console.log(response);
+    if (response.status === 500) {
+      throw new Error("Сервер не доступен")
+    } else {
+      return response.json();
+    }
+  });
+}
+
+export function toggleLike({ id }) {
+  return fetch(`https://wedev-api.sky.pro/api/v2/artem-katkov/comments/${id}/toggle-like`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  })
 }
 
 // export function postExit({ token }) {

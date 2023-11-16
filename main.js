@@ -1,4 +1,4 @@
-import { getTodo, postTodo } from "./api.js";
+import { getTodo, postTodo, toggleLike } from "./api.js";
 import { renderComment } from './render.js';
 import { setToken, token } from './autorize.js';
 
@@ -118,6 +118,7 @@ export function apiGet() {
 
     const apiComment = responseData.comments.map((comment) => {
       return {
+        id: comment.id,
         name: comment.author.name,
         data: correctDate(comment.date),
         text: comment.text,
@@ -239,8 +240,9 @@ export function addLikeEventListeners() {
 
       // console.log(index);
       event.stopPropagation();
-      addLike(index);
-
+      toggleLike({ id: comments[comments.length - 1].id }).then(() => {
+        apiGet();
+      })
     });
   });
 }

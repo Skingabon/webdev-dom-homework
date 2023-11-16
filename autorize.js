@@ -10,7 +10,7 @@ export let token = localStorage.getItem('token');
 export const setToken = (newToken) => {
     token = newToken;
 }
-let isLoginMode = true;
+// let isLoginMode = true;
 // export let userName = null;
 // export let userVisit = false;
 export function autorizeRender(isLoginMode = true) {

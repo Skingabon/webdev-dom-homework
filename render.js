@@ -1,7 +1,7 @@
 // import { comments, addLikeEventListeners, oncommentClickEventListener } from './main.js' HELP help
 
 
-import { login } from './api.js';
+import { deleteCommentApi, login } from './api.js';
 import { autorizeRender, token, userName } from './autorize.js';
 import { addComment, addLikeEventListeners, apiGet, comments } from './main.js'
 
@@ -21,6 +21,7 @@ export const renderComment = () => {
     id="input-comment"></textarea>
   <div class="add-form-row">
     <button class="add-form-button" id="add-button">Написать</button>
+    <button class="add-form-button" id="delete-button">Удалить</button>
     <button class="add-form-button" id="exit-button">Выход</button>
   </div>
   </div>`
@@ -79,7 +80,18 @@ ${(!token) ? buttonAutorize : formAccesUser}
     })
   }
 
+  function deleteComment() {
+    if (!token) return;
+    const deleteButtonComment = document.getElementById("delete-button");
+    deleteButtonComment.addEventListener("click", () => {
+      deleteCommentApi({ id: comments[comments.length - 1].id }).then(() => {
+        apiGet({ comments });
+      }).catch((err) => {
 
+      });
+    })
+  }
+  deleteComment();
 
   // listElement.innerHTML = commentsHTML;
 
