@@ -19,11 +19,18 @@ export function autorizeRender() {
     const loginHTML =
 
         `<div class = 'autorizeForm'> 
+        <h1 class = 'form-title'>Форма ${isLoginMode ? "входа" : "Регистрации"}</h1>
         <div>
-<input type="password" 
+        ${isLoginMode
+            ? ""
+            : `
+            <input type="password" 
 class="add-form-name" 
 placeholder="Введите ваше имя" 
 id="input-name1" />
+            `
+        }
+
       <input type="text" 
       class="add-form-text" 
       placeholder="Введите ваш логин" 
@@ -33,8 +40,8 @@ id="input-name1" />
         placeholder="Введите ваш пароль" 
         id="input-password"></textarea>
         <div class="add-form-row">
-        <button class="add-form-button" id="login-button">Войти</button>
-        <button class="add-form-button" id="toggle-button">Перейти к регистрации</button>
+        <button class="add-form-button" id="login-button">${isLoginMode ? "Войти" : "Зарегистрироваться"}</button>
+        <button class="add-form-button" id="toggle-button">Перейти ${isLoginMode ? "К регистрации" : "ко входу"} </button>
 </div>
 </div>
         `
@@ -42,6 +49,7 @@ id="input-name1" />
 
     document.getElementById("toggle-button").addEventListener('click', () => {
         isLoginMode = !isLoginMode;
+        autorizeRender();
     })
 
     document.getElementById("login-button").addEventListener('click', () => {
@@ -99,11 +107,7 @@ id="input-name1" />
         // apiFormShow();
     }
     )
-
-    // }
-    // return;
-
 }
 
-
+autorizeRender();
 
