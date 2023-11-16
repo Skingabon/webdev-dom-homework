@@ -1,6 +1,6 @@
 import { getTodo, postTodo } from "./api.js";
 import { renderComment } from './render.js';
-import { token } from './autorize.js';
+import { setToken, token } from './autorize.js';
 
 
 //HELP help 
