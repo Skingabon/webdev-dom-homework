@@ -1,6 +1,6 @@
 import { getTodo, postTodo, toggleLike } from "./api.js";
 import { renderComment } from './render.js';
-import { setToken, token } from './autorize.js';
+import { setToken, token, userName } from './autorize.js';
 
 
 //HELP help 
@@ -235,12 +235,15 @@ function addLike(index) {
 export function addLikeEventListeners() {
   const likeButtons = document.querySelectorAll(".like-button");
 
-  likeButtons.forEach((likeButton, index) => {
+  likeButtons.forEach((likeButton, comment, index) => {
     likeButton.addEventListener("click", (event) => {
 
       // console.log(index);
       event.stopPropagation();
       toggleLike({ id: comments[comments.length - 1].id }).then(() => {
+        console.log(`Юзер:${userName}`);
+        console.log(comment.name[index]);
+
         apiGet();
       })
     });
