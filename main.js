@@ -231,24 +231,35 @@ function addLike(index) {
 export function addLikeEventListeners() {
   const likeButtons = document.querySelectorAll(".like-button");
 
-  likeButtons.forEach((likeButton, comment, index) => {
+  likeButtons.forEach((likeButton, index) => {
     likeButton.addEventListener("click", (event) => {
-      const comment = comments[index];
-      // const commentUser = comments.author.name[index]
-
-      // console.log("Автор комментария, который хочет лайкнуть авторизованный юзер");
-      console.log(`Юзер:${userName}`);
-      // console.log(comment.name[index]);
-
       event.stopPropagation();
-      toggleLike({ id: comments[comments.length - 1].id }).then(() => {
+      const comment = comments[index];
+      // console.log(`Юзер:${userName}`);
+      // console.log(comments[index].name);
+
+      if (userName === comments[index].name) {
+        return;
+      }
+
+      toggleLike({ id: comments[index].id }).then(() => {
+
         apiGet();
+
       })
+      const likeButtons = document.querySelectorAll(".like-button");
+      const likeButton = likeButtons[index];
+      comment.isLiked = true;
+      if (comment.isLiked) {
+        likeButton.classList.add("active-like");
+        comment.isLiked = false;
+      }
+
     });
   });
 }
 
-addLikeEventListeners(apiGet());
+addLikeEventListeners();
 
 
 
@@ -260,14 +271,18 @@ export function oncommentClickEventListener() {
   const commentUpdate = document.querySelectorAll('.comment');
   for (const comment of commentUpdate) {
     comment.addEventListener('click', () => {
+
       const commentInputElement = document.getElementById("input-comment");
       console.log("Нажал на коментарий");
       let index = comment.dataset.index;
       let object = comments[index];
+      if (userName === comments[index].name) {
+        return;
+      }
       commentInputElement.value = `${object.text} // ${object.name}`;
       console.log(commentInputElement.value);
 
-      renderComment();
+      // renderComment();
     });
   }
 }
