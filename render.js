@@ -3,7 +3,7 @@
 
 import { deleteCommentApi, login } from './api.js';
 import { autorizeRender, token, userName } from './autorize.js';
-import { addComment, addLikeEventListeners, apiGet, comments } from './main.js'
+import { addComment, addLikeEventListeners, apiGet, comments, oncommentClickEventListener } from './main.js'
 
 export const renderComment = () => {
 
@@ -95,6 +95,6 @@ ${(!token) ? buttonAutorize : formAccesUser}
 
   // listElement.innerHTML = commentsHTML;
 
-  addLikeEventListeners()
-  //   oncommentClickEventListener() help
+  addLikeEventListeners();
+  oncommentClickEventListener();
 };

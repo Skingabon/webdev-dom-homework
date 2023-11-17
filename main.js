@@ -107,12 +107,8 @@ export function hideAutorizeForm() {
 }
 
 export function apiGet() {
-  console.log('мы в гете');
   renderComment();
   showCommentLoading();
-
-
-
   getTodo().then((responseData) => {
     console.log(responseData);
 
@@ -237,34 +233,42 @@ export function addLikeEventListeners() {
 
   likeButtons.forEach((likeButton, comment, index) => {
     likeButton.addEventListener("click", (event) => {
+      const comment = comments[index];
+      // const commentUser = comments.author.name[index]
 
-      // console.log(index);
+      // console.log("Автор комментария, который хочет лайкнуть авторизованный юзер");
+      console.log(`Юзер:${userName}`);
+      // console.log(comment.name[index]);
+
       event.stopPropagation();
       toggleLike({ id: comments[comments.length - 1].id }).then(() => {
-        console.log(`Юзер:${userName}`);
-        console.log(comment.name[index]);
-
         apiGet();
       })
     });
   });
 }
 
-addLikeEventListeners();
+addLikeEventListeners(apiGet());
 
 
 
 // renderComment();
 
 // ///////НУЖНО ПЕРЕДАТЬ В РЕНДЕР МОДУЛЬ В КАЧЕСТВЕ ПАРАМЕТРА
-// export function oncommentClickEventListener() {
-//   const commentUpdate = document.querySelectorAll('.comment');
-//   for (const comment of commentUpdate) {
-//     comment.addEventListener('click', () => {
-//       let index = comment.dataset.index;
-//       let object = comments[index];
-//       commentInputElement.value = `${object.text} // ${object.name}`;
-//       renderComment();
-//     });
-//   }
-// }
+export function oncommentClickEventListener() {
+
+  const commentUpdate = document.querySelectorAll('.comment');
+  for (const comment of commentUpdate) {
+    comment.addEventListener('click', () => {
+      const commentInputElement = document.getElementById("input-comment");
+      console.log("Нажал на коментарий");
+      let index = comment.dataset.index;
+      let object = comments[index];
+      commentInputElement.value = `${object.text} // ${object.name}`;
+      console.log(commentInputElement.value);
+
+      renderComment();
+    });
+  }
+}
+
