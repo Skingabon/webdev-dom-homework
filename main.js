@@ -119,9 +119,10 @@ export function apiGet() {
         data: correctDate(comment.date),
         text: comment.text,
         like: comment.likes,
-        isLiked: false,
+        isLiked: comment.isliked,
       }
     });
+
     comments = apiComment;
 
     hideCommentLoading();
@@ -228,32 +229,41 @@ function addLike(index) {
 }
 //Написал функцию. которая инициализирует обработчики кликов по кнопкам Лайк
 ///////НУЖНО ПЕРЕДАТЬ В РЕНДЕР МОДУЛЬ В КАЧЕСТВЕ ПАРАМЕТРА
+
 export function addLikeEventListeners() {
   const likeButtons = document.querySelectorAll(".like-button");
 
   likeButtons.forEach((likeButton, index) => {
     likeButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      const comment = comments[index];
-      // console.log(`Юзер:${userName}`);
-      // console.log(comments[index].name);
+      if (index !== null) {
+        const comment = comments[index];
+        if (!comment.isLiked) {
+          comment.isLiked = true;
+          likeButton.classList.add("active-like");
+          comment.like++;
+          console.log(comment.isLike);
+        } else {
+          comment.isLiked = false;
+          comment.like--;
+          console.log("like else");
+        }
+        // renderComment();
+      }
+
+
 
       if (userName === comments[index].name) {
         return;
       }
 
       toggleLike({ id: comments[index].id }).then(() => {
+        const comment = comments[index];
+        comment.isLike = true;
+
 
         apiGet();
-
       })
-      const likeButtons = document.querySelectorAll(".like-button");
-      const likeButton = likeButtons[index];
-      comment.isLiked = true;
-      if (comment.isLiked) {
-        likeButton.classList.add("active-like");
-        comment.isLiked = false;
-      }
 
     });
   });
