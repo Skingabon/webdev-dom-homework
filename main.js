@@ -241,6 +241,7 @@ export function addLikeEventListeners() {
         if (!comment.isLiked) {
           comment.isLiked = true;
           likeButton.classList.add("active-like");
+          comment.isLiked = false;
           comment.like++;
           console.log(comment.isLike);
         } else {
