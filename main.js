@@ -2,46 +2,9 @@ import { getTodo, postTodo, toggleLike } from "./api.js";
 import { renderComment } from './render.js';
 import { setToken, token, userName } from './autorize.js';
 
-
-//HELP help 
 const buttonElement = document.getElementById("add-button");
-// const listElement = document.getElementById("list");
-// const nameInputElemnt = document.getElementById("input-name");
-// const commentInputElement = document.getElementById("input-comment");
-// const currentDate = new Date().toLocaleString().slice(0, -3);
-// const likeButtons = document.querySelectorAll(".like-button");
-// const token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
-// const textInApi = commentInputElement.value;
-// const nameInApi = nameInputElemnt.value;
-//HELP
-
-///////// const loginInputElement = document.getElementById("input-login");
-///////// // const passwordInputElement = document.getElementById("input-password");
-////////// / export const textLogin = loginInputElement.value;
-////////// / export const textPassword = passwordInputElement.value;
-
-
-// 1 OK! Установить инсомния или постман 
-// 2 OK! В Апи авторизации посмотреть как зарегистрироваться
-// 3 OK! Выполнить в постман или инсомнии запрос со своим паролем и именем
-// 4 OK! В ответе я получу информацию о пользователе и токен
-// 5 OK! Подставлю токен в переменную user вместо ksdfsksdfjfsdjk6
-// 6 OK!Проверяю добавление коментария авторизованного пользователя
-// 7 OK! Улучшаю форму авторизации (добавляю поля логин пароль и кнопку войти)
-// 8 OK! Добавляю в API новую функцию которая выполняет авторизацию по кнопке в форме
-// 9 OK! Вызываю фукнцию входа авторизованного юзера по клику на кнопку войти
-// 10 Посмотреть что возвращает авторизация https://github.com/GlebkaF/webdev-hw-api/blob/main/pages/api/user/README.md#%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C%D1%81%D1%8F
-// 11 Получить токен и записать его в переменную юзер или ЛокалСтораж 
-////localStorage.setItem('TOKEN', user.token); 
-////localStorage.setItem('NAME', user.name);
-////const user = localStorage.getItem('TOKEN');
-
-// 12  Если пользователь авторизовался то я скрываю форму авторизации
-
 
 export let comments = [];
-
-// let password = prompt("Ввести пароль");
 
 function correctDate(date) {
   let currentDate = new Date(date);
@@ -66,13 +29,13 @@ export function apiFormHide() {//Порячу форму добавления к
 }
 
 export function apiFormShow() {//Показываю форму добавления коментария
-  //console.log("apiCommentShow");
+
   const apiFormShow = document.querySelector(".add-form");
   apiFormShow.classList.remove("hidden");
 }
 
 function showCommentLoading() {//Показываю (удаляю в стилях блок) временный текст до загрузки комментариев
-  //console.log("showCommentLoading");
+
   const showCommentLoading = document.querySelector(".api-loader");
   showCommentLoading.classList.remove("hidden");
 }
@@ -119,30 +82,16 @@ export function apiGet() {
         data: correctDate(comment.date),
         text: comment.text,
         like: comment.likes,
-        isLiked: comment.isliked,
+        isLiked: comment.isLiked,
       }
     });
-
     comments = apiComment;
-
     hideCommentLoading();
     renderComment();
-
   });
-
 }
-// autorizeRender();   HELP
+
 apiGet();
-
-
-// nameInputElemnt.value = "";  HELP
-// commentInputElement.value = "";  HELP
-
-// renderComment();
-
-
-// /////////////////////HELP
-
 
 export function addComment() {
   const buttonElement = document.getElementById("add-button");
@@ -165,7 +114,6 @@ export function addComment() {
       alert("Заполните ИМЯ и ваш комментарий, пожалуйста.")
       return;
     }
-
 
     hideInternetError();
     showCommentAdd();
@@ -204,29 +152,6 @@ export function addComment() {
   })
 }
 
-// Функция счета лайков
-function addLike(index) {
-  const likeButtons = document.querySelectorAll('.like-button');
-  const likeButton = likeButtons[index];
-  const comment = comments[index];
-
-  if (!comment.isLiked) {
-    //console.log('+1 like');
-    comment.like += 1;
-    comment.isLiked = true;
-    likeButton.classList.add("active-like");
-  } else {
-    //console.log('-1 like');
-    comment.like -= 1;
-    comment.isLiked = false;
-    renderComment();
-  }
-
-  //Обновляю счетчик числа лайков (свойство previousElementSibling содержит предыдущий элемент, находящийся в этом же родителе)
-  const likeCounter = likeButton.previousElementSibling;
-  likeCounter.textContent = comment.like;
-  //console.log(likeCounter.value);
-}
 //Написал функцию. которая инициализирует обработчики кликов по кнопкам Лайк
 ///////НУЖНО ПЕРЕДАТЬ В РЕНДЕР МОДУЛЬ В КАЧЕСТВЕ ПАРАМЕТРА
 
@@ -236,45 +161,14 @@ export function addLikeEventListeners() {
   likeButtons.forEach((likeButton, index) => {
     likeButton.addEventListener("click", (event) => {
       event.stopPropagation();
-      if (index !== null) {
-        const comment = comments[index];
-        if (!comment.isLiked) {
-          comment.isLiked = true;
-          likeButton.classList.add("active-like");
-          comment.isLiked = false;
-          comment.like++;
-          console.log(comment.isLike);
-        } else {
-          comment.isLiked = false;
-          comment.like--;
-          console.log("like else");
-        }
-        // renderComment();
-      }
-
-
-
-      if (userName === comments[index].name) {
-        return;
-      }
-
       toggleLike({ id: comments[index].id }).then(() => {
-        const comment = comments[index];
-        comment.isLike = true;
-
-
         apiGet();
       })
-
     });
   });
 }
 
 addLikeEventListeners();
-
-
-
-// renderComment();
 
 // ///////НУЖНО ПЕРЕДАТЬ В РЕНДЕР МОДУЛЬ В КАЧЕСТВЕ ПАРАМЕТРА
 export function oncommentClickEventListener() {
@@ -293,7 +187,6 @@ export function oncommentClickEventListener() {
       commentInputElement.value = `${object.text} // ${object.name}`;
       console.log(commentInputElement.value);
 
-      // renderComment();
     });
   }
 }

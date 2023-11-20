@@ -35,7 +35,6 @@ export function postTodo({ textInApi, nameInApi, token }) {
           .replaceAll('"', "&quot;"),
         forceError: true,
       })
-
     })
 }
 
@@ -50,17 +49,12 @@ export function login({ login, password }) {
         login,
         password,
       }),
-
     })
-    // .then((user) => {
-    // })
     .then((response) => {
       if (response.status === 400) {
         throw new Error("Неверный логин или пароль");
       }
-
       return response.json();
-
     });
 }
 
@@ -102,7 +96,6 @@ export function register({ login, password, name }) {
         password,
         name,
       }),
-
     }).then((response) => {
       if (response.status === 400) {
         throw new Error("Такой пользователь уже существует");

@@ -1,24 +1,14 @@
 import { login, register } from './api.js';
-import { apiFormHide, apiFormShow, apiGet, hideAutorizeForm } from './main.js'
 import { renderComment } from './render.js';
-
-//help help
-//export let token = 'Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k';
-// token = null;
 export let userName = localStorage.getItem('user');
 export let userLogin = localStorage.getItem('login');
 export let token = localStorage.getItem('token');
 export const setToken = (newToken) => {
     token = newToken;
 }
-// let isLoginMode = true;
-// export let userName = null;
-// export let userVisit = false;
+
 export function autorizeRender(isLoginMode = true) {
-    // const autorizeForm = document.querySelector('.autorizeForm'); HELP
     const appHTML = document.getElementById('app');
-
-
     const loginHTML =
 
         `<div class = 'autorizeForm'> 
@@ -34,7 +24,6 @@ placeholder="Введите ваше имя"
 id="input-name2" />
             `
         }
-
       <input type="text" 
       class="add-form-text" 
       placeholder="Введите ваш логин" 
@@ -56,66 +45,9 @@ id="input-name2" />
         console.log("Я в кнопке перейти к регистрации");
         autorizeRender(isLoginMode);
     })
-    //старый рабочий обработчик клика
-    // document.getElementById("login-button").addEventListener('click', () => {
-    //     const nameForm = document.getElementById("input-name").value;
-    //     const loginForm = document.getElementById("input-login").value;
-    //     const passwordForm = document.getElementById("input-password").value;
-
-    //     if (!loginForm) {
-    //         alert("Введите Ваш логин")
-    //         return;
-    //     }
-    //     if (!passwordForm) {
-    //         alert("Введите Ваш пароль")
-    //         return;
-    //     }
-
-    //     login({
-    //         // login: "admin",
-    //         // password: "admin",
-    //         login: loginForm,
-    //         password: passwordForm,
-    //     }).then((response) => {
-    //         //console.log('я в зэне Авторизации');
-    //         // console.log(response);
-    //         token = response.user.token;
-    //         userName = response.user.name;
-    //         console.log(userName);
-    //         localStorage.setItem('user', userName);
-    //         localStorage.setItem('token', token);
-    //         // userVisit = true;
-    //         renderComment();
-
-    //         // apiFormShow();
-    //         // if (passwordForm != password) { throw new Error("400") }
-    //         // else {
-    //         //     console.log('Привет юзер');
-    //         //     token = `Bearer ${user.user.token}`;
-    //         //     console.log('Твой пароль');
-    //         // }
-    //     }).catch((error) => {
-    //         // console.error(error.message);
-    //         // if (error.message === '400') {
-    //         //     alert("Наконецто ппоймал ошибку авторизации")
-    //         // }
-    //         // if (error.message === '201') {
-    //         //     alert("Авторизовались")
-    //         // }
-    //         alert(error.message)
-    //     })
-    //     //help
-    //     // // autorizeRender(); help
-    //     // console.log('нажал войти');
-    //     // console.log(token);
-    //     // hideAutorizeForm();
-    //     // apiFormShow();
-    // }
-    // )
 
     document.getElementById("login-button").addEventListener('click', () => {
         if (isLoginMode) {
-            // const nameForm = document.getElementById("input-name2").value;
             const loginForm = document.getElementById("input-login").value;
             const passwordForm = document.getElementById("input-password").value;
             if (!loginForm) {
@@ -126,20 +58,15 @@ id="input-name2" />
                 alert("Введите Ваш пароль")
                 return;
             }
-
-
             login({
-
                 login: loginForm,
                 password: passwordForm,
-
             }).then((response) => {
                 token = response.user.token;
                 userName = response.user.name;
                 console.log(userName);
                 localStorage.setItem('user', userName);
                 localStorage.setItem('token', token);
-                //apiGet();
                 renderComment();
             }).catch((error) => {
                 alert(error.message)
@@ -154,7 +81,6 @@ id="input-name2" />
                 alert("Введите Ваше имя")
                 return;
             }
-
             if (!loginForm) {
                 alert("Введите Ваш логин")
                 return;
@@ -163,31 +89,23 @@ id="input-name2" />
                 alert("Введите Ваш пароль")
                 return;
             }
-
-
             register({
-
                 login: loginForm,
                 password: passwordForm,
                 name: nameForm,
-
             }).then((user) => {
                 setToken(`Bearer ${user.user.token}`)
                 token = user.user.token;
                 userName = user.user.name;
-
                 localStorage.setItem('user', userName);
                 localStorage.setItem('token', token);
-
                 renderComment();
             }).catch((error) => {
                 alert(error.message)
             })
         }
-
     }
     )
 }
-
 autorizeRender();
 

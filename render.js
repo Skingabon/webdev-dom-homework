@@ -1,15 +1,9 @@
-// import { comments, addLikeEventListeners, oncommentClickEventListener } from './main.js' HELP help
-
-
 import { deleteCommentApi, login } from './api.js';
 import { autorizeRender, token, userName } from './autorize.js';
 import { addComment, addLikeEventListeners, apiGet, comments, oncommentClickEventListener } from './main.js'
 
 export const renderComment = () => {
 
-
-
-  // const listElement = document.querySelector('.comments');
   const appHTML = document.getElementById('app');
   const buttonAutorize = '<button class="autorize-button"> Авторизоваться </button>';
   const formAccesUser = `<div class="add-form">
@@ -25,8 +19,6 @@ export const renderComment = () => {
     <button class="add-form-button" id="exit-button">Выход</button>
   </div>
   </div>`
-  //поиск элемента списка в стр.79
-  //формирование HTML строки
   const commentsHTML = comments.map((comment, index) => {
 
     return `
@@ -45,12 +37,11 @@ export const renderComment = () => {
             <div class="likes">
               <span data-index="${index}" class="likes-counter">${comment.like}</span>
               <button data-index="${index}" class="like-button 
-              ${comment.isliked ? 'active-like' : ''}"></button>
+              ${comment.isLiked ? 'active-like' : ''}"></button>
             </div>
           </div>
         </li>`;
   }).join('');
-  //console.log(commentsHTML);
   appHTML.innerHTML = `
     <div class="api-loader hidden">
       <span>Данные загружаются, нужно немного подождать...</span>
@@ -70,14 +61,11 @@ export const renderComment = () => {
 ${(!token) ? buttonAutorize : formAccesUser}
 `
   if (token) { addComment() }
-  // console.log(userVisit);
-
   if (!token) {
     console.log(token);
     const autorizeButton = document.querySelector('.autorize-button');
     autorizeButton.addEventListener('click', () => {
       autorizeRender();
-
     })
   }
 
@@ -88,14 +76,10 @@ ${(!token) ? buttonAutorize : formAccesUser}
       deleteCommentApi({ id: comments[comments.length - 1].id }).then(() => {
         apiGet({ comments });
       }).catch((err) => {
-
       });
     })
   }
   deleteComment();
-
-  // listElement.innerHTML = commentsHTML;
-
   addLikeEventListeners();
   oncommentClickEventListener();
 };
